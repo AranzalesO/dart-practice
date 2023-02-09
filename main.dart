@@ -1,34 +1,45 @@
 void main() {
-  List persons = [Persona("Hombre", "Soltero", 23), Persona("Hombre", "Soltero", 33), Persona("Hombre", "Casado", 45), Persona("Hombre", "Casado", 55), Persona("Mujer", "Casada", 40), Persona("Mujer", "Soltera", 20)];
+  List persons = [
+    Persona("Masculino", "Soltero", 45),
+    Persona("Masculino", "Soltero", 15),
+    Persona("Femenino", "Soltera", 10),
+    Persona("Masculino", "Casado", 30),
+    Persona("Femenino", "Soltera", 10),
+    Persona("Femenino", "Casada", 25),
+    Persona("Masculino", "Casado", 20)
+  ];
 
   var edad = 0;
   var hombres = 0;
+  var mujeres = 0;
   var solteros = 0;
+  var totalSolteros = 0;
+  var casados = 0;
 
   // Mujeres:
   var solteras = 0;
   for (Persona personita in persons) {
-    if(personita.sexo == "Hombre") {
-      hombres += 1;
-      if(personita.estado_civil == "Casado") {
-        edad += personita.edad;
-      }
-      if(personita.estado_civil == "Soltero") {
-        solteros += 1;
-      }
-    }
-    // Para mujeres
-    if(personita.sexo == "Mujer" && personita.estado_civil == "Soltera") {
-      solteras += 1;
-      solteros += 1;
+    personita.sexo == "Masculino" ? hombres++ : mujeres++;
+    if (personita.sexo == "Masculino" && personita.estado_civil == "Casado") {
+      edad += personita.edad;
+      casados++;
+    } else if (personita.estado_civil == "Soltero") {
+      solteros++;
+      totalSolteros++;
+    } else if (personita.sexo == "Femenino" &&
+        personita.estado_civil == "Soltera") {
+      solteras++;
+      totalSolteros++;
     }
   }
   double porcentajeSolterosHombres = (solteros * 100) / hombres;
-  double porcentajeSolteras = (solteras * 100) / solteros;
-  double promedio = edad / persons.length;
-  print("El porcentaje de hombres solteros respecto al total de hombres es de: %$porcentajeSolterosHombres");
-  print("El porcentaje de mujeres solteras respecto al total de solteros es: %$porcentajeSolteras");
-  print("La edad promedio de personas casadas es de: $promedio");
+  double porcentajeSolteras = (solteras * 100) / totalSolteros;
+  double promedio = edad / casados;
+  print(
+      "El porcentaje de hombres solteros respecto al total de hombres es de: %$porcentajeSolterosHombres");
+  print("La edad promedio de hombres casados es de: $promedio");
+  print(
+      "El porcentaje de mujeres solteras respecto al total de solteros es: %$porcentajeSolteras");
 }
 
 class Persona {
